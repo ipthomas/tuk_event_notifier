@@ -27,6 +27,7 @@ func Handle_Request(req events.APIGatewayProxyRequest) (*events.APIGatewayProxyR
 	if !initSrvcs {
 		dbconn = tukdbint.TukDBConnection{DBUser: os.Getenv(tukcnst.ENV_DB_USER), DBPassword: os.Getenv(tukcnst.ENV_DB_PASSWORD), DBHost: os.Getenv(tukcnst.ENV_DB_HOST), DBPort: os.Getenv(tukcnst.ENV_DB_PORT), DBName: os.Getenv(tukcnst.ENV_DB_NAME)}
 		if err = tukdbint.NewDBEvent(&dbconn); err != nil {
+			log.Println(err.Error())
 			return queryResponse(http.StatusInternalServerError, err.Error(), tukcnst.TEXT_PLAIN)
 		}
 		initSrvcs = true
